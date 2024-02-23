@@ -1,0 +1,121 @@
+using System;
+
+public class Motor
+{
+    private int _litrosDeAceite;
+    private int _potencia;
+
+    public Motor(int potencia)
+    {
+        _potencia = potencia;
+        _litrosDeAceite = 0;
+    }
+
+    public int LitrosDeAceite { get => _litrosDeAceite; set => _litrosDeAceite = value; }
+    public int Potencia { get => _potencia; set => _potencia = value; }
+}
+
+public class Coche
+{
+    private Motor _motor;
+    private string _marca;
+    private string _modelo;
+    private double _precioAcumuladoAverias;
+
+    public Coche(string marca, string modelo)
+    {
+        _motor = new Motor(100); // Potencia por defecto
+        _marca = marca;
+        _modelo = modelo;
+        _precioAcumuladoAverias = 0;
+    }
+
+    public Motor Motor { get => _motor; }
+    public string Marca { get => _marca; }
+    public string Modelo { get => _modelo; }
+    public double PrecioAcumuladoAverias { get => _precioAcumuladoAverias; }
+
+    public void AcumularAveria(double importe)
+    {
+        _precioAcumuladoAverias += importe;
+    }
+}
+
+public class Garaje
+{
+    private Coche _cocheActual;
+    private string _nombreAveria;
+    private int _numeroCochesAtendidos;
+
+    public Garaje()
+    {
+        _cocheActual = null;
+        _nombreAveria = "";
+        _numeroCochesAtendidos = 0;
+    }
+
+    public bool AceptarCoche(Coche coche, string nombreAveria)
+    {
+        if (_cocheActual != null)
+        {
+            return false;
+        }
+
+        _cocheActual = coche;
+        _nombreAveria = nombreAveria;
+        _numeroCochesAtendidos++;
+
+        return true;
+    }
+
+    public void DevolverCoche()
+    {
+        _cocheActual = null;
+        _nombreAveria = "";
+    }
+
+    public string NombreAveria { get => _nombreAveria; }
+    public int NumeroCochesAtendidos { get => _numeroCochesAtendidos; }
+}
+
+public class PracticaPOO
+{
+    public static void Main(string[] args)
+    {
+        Garaje garaje = new Garaje();
+
+        Coche coche1 = new Coche("Ford", "Fiesta");
+        Coche coche2 = new Coche("Renault", "Megane");
+
+        Random random = new Random();
+
+        for (int i = 0; i < 4; i++)
+        {
+            bool cocheAceptado = garaje.AceptarCoche(i % 2 == 0 ? coche1 : coche2, <span class="math-inline">"Avería \{\(i \+ 1\)\}"\);
+if \(cocheAceptado\)
+\{
+double importeAveria \= random\.NextDouble\(\) \* 1000;
+Console\.WriteLine\(</span>"Coche {cocheAceptado ? "aceptado" : "rechazado"} en el garaje. Avería: {_nombreAveria}. Importe: {importeAveria:C2}");
+
+                if (_nombreAveria == "aceite")
+                {
+                    coche1.Motor.LitrosDeAceite += 10;
+                    coche2.Motor.LitrosDeAceite += 10;
+                }
+
+                cocheAceptado.AcumularAveria(importeAveria);
+
+                garaje.DevolverCoche();
+            }
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Información de los coches:");
+        Console.WriteLine(<span class="math-inline">"\- Coche 1 \(\{coche1\.Marca\} \{coche1\.Modelo\}\)\:"\);
+Console\.WriteLine\(</span>"    - Litros de aceite: {coche1.Motor.LitrosDeAceite}");
+        Console.WriteLine(<span class="math-inline">"    \- Precio acumulado averías\: \{coche1\.PrecioAcumuladoAverias\:C2\}"\);
+Console\.WriteLine\(</span>"- Coche 2 ({coche2.Marca} {coche2.Modelo}):");
+        Console.WriteLine(<span class="math-inline">"    \- Litros de aceite\: \{coche2\.Motor\.LitrosDeAceite\}"\);
+Console\.WriteLine\(</span>"    - Precio acumulado averías: {coche2.PrecioAcumuladoAverias:C2}");
+    }
+}
